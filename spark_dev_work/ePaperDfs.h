@@ -21,7 +21,8 @@
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#define __AVR_ATmega32U4__
+//spark with sd card
+#define __AVR_ATmega328P__
 
 #ifndef __EPAPERDFS_H__
 #define __EPAPERDFS_H__

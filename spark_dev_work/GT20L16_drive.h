@@ -1,5 +1,5 @@
 /*
-  ePaperDfs.h
+  GT20L16_drive.h
   2013 Copyright (c) Seeed Technology Inc.  All right reserved.
 
   Modified by Loovee
@@ -21,49 +21,37 @@
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#define __AVR_ATmega32U4__
+#ifndef __GT20L16_DRIVE_H__
+#define __GT20L16_DRIVE_H__
 
-#ifndef __EPAPERDFS_H__
-#define __EPAPERDFS_H__
-
-// pin define
-
-typedef enum {
-	DIRNORMAL,
-	DIRLEFT,
-	DIRRIGHT,
-    DIRDOWN
-} EPD_DIR;
+//#define PIN_GT20L16_CS      9
+#define PIN_GT20L16_CS      A1
 
 
-//2015-01-27 Spark core pins
-#define Pin_TEMPERATURE   A0
-#define Pin_PANEL_ON      D2
-#define Pin_BORDER        D3
-#define Pin_DISCHARGE     D4
-#define Pin_PWM           A7
-#define Pin_RESET         D6
-#define Pin_BUSY          D7
+class GT20L16_drive{
 
-#define Pin_EPD_CS        D0
+private:
 
-#define Pin_SD_CS         A2
+    int pinCS;
 
-#define Pin_OE123         D5 //tmp
-#define Pin_STV_IN        A6
+private:
+
+    void GT_Select();
+    void GT_UnSelect();
+    unsigned long getAddrFromUnicode(unsigned int uniCode);
+    unsigned long GTRead(unsigned long Address);
+public:
+
+    void begin(int pinSelect);
+    
+    void begin(){begin(PIN_GT20L16_CS);}
+
+    int getMatrixUnicode(unsigned int uniCode, unsigned char *matrix);
 
 
+};
 
-
-// spi cs
-
-#define EPD_SELECT()        digitalWrite(Pin_EPD_CS, LOW)
-#define EPD_UNSELECT()      digitalWrite(Pin_EPD_CS, HIGH)
-#define SD_SELECT()         digitalWrite(Pin_SD_CS, LOW) 
-#define SD_UNSELECT()       digitalWrite(Pin_SD_CS, HIGH)
-#define FONT_SELECT()       digitalWrite(Pin_Font_CS, LOW) 
-#define FONT_UNSELECT()     digitalWrite(Pin_Font_CS, HIGH)
-
+extern GT20L16_drive GT20L16;
 
 #endif
 

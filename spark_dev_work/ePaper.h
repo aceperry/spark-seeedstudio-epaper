@@ -26,11 +26,11 @@
 #ifndef __EPAPER_H__
 #define __EPAPER_H__
 
-//#include <SD.h>
-#include "sd-card-library.h"
-#include <spark_wiring_spi.h>
-//#include <SPI.h>
-#include <EPD.h>
+#include "SD.h"
+//#include "sd-card-library.h"
+#include "spark_wiring_spi.h"
+#include "spi.h"
+#include "EPD.h"
 
 #include "sd_epaper.h"
 #include "ePaperDfs.h"
@@ -52,55 +52,55 @@ class ePaper
 
 private:
 
-    
+
     unsigned char tMatrix[32];
-    
+
     int SIZE_LEN;
     int SIZE_WIDTH;
-    
+
     int DISP_LEN;
     int DISP_WIDTH;
-    
+
     EPD_DIR direction;
-    
+
 public:
 
     EPD_size size;
-    
+
     int getTemperature();                   // get temperature
-    
+
     void begin(EPD_size sz);
-    
+
     void setDirection(EPD_DIR dir);
-    
+
     void start();
-    
+
     void end();
-    
+
     void init_io();
-    
-    unsigned char display();                // refresh 
-    
+
+    unsigned char display();                // refresh
+
     void image_flash( const unsigned char *image)           // read image from flash
     {
         start();
         //EPD.clear();
         EPD.image(image);
         end();
-    } 
- 
+    }
+
     void clear()                             // clear display
     {
         start();
         EPD.clear();
         end();
-    } 
-    
-    void clear_sd();                         // clear sd card 
+    }
 
-    
+    void clear_sd();                         // clear sd card
 
-   
+
+
+
     void spi_detach();
 #if defined(__AVR_ATmega1280__) || defined(__AVR_ATmega2560__)
     void image_sram(unsigned char *image)
@@ -110,33 +110,33 @@ public:
         end();
     }
 #endif
-    
+
     inline void drawPixel(int x, int y, unsigned char color)
     {
 		eSD.putPixel(x, y, color);
-        
+
 	}
-    
+
     int drawChar(char c, int x, int y);
     int drawString(char *string, int poX, int poY);
     int drawNumber(long long_num,int poX, int poY);
     int drawFloat(float floatNumber,int decimal,int poX, int poY);
-    
+
     int drawUnicode(unsigned int uniCode, int x, int y);
     int drawUnicode(unsigned char *matrix, int x, int y);
-    
+
     int drawUnicodeString(unsigned int *uniCode, int len, int x, int y);
-    
+
     int drawCharBig(char c, int x, int y);
     int drawStringBig(char *string, int poX, int poY);
     int drawNumberBig(long long_num,int poX, int poY);
     //int drawFloatBig(float floatNumber,int decimal,int poX, int poY);
-    
+
     int drawUnicodeBig(unsigned int uniCode, int x, int y);
     int drawUnicodeBig(unsigned char *matrix, int x, int y);
-    
+
     int drawUnicodeStringBig(unsigned int *uniCode, int len, int x, int y);
-    
+
     void drawLine(int x0, int y0, int x1, int y1);
     void drawCircle(int poX, int poY, int r);
     void drawHorizontalLine( int poX, int poY, int len);
